@@ -16,7 +16,7 @@
             cursor: pointer;
         }
         li:hover {
-            opacity: 0.5;
+            opacity: 0.8;
         }
         a {
             text-decoration: none;
@@ -24,7 +24,6 @@
         }
         .selected {
             background-color: #cff4fc;
-            color: bisque;
         }
     }
 }

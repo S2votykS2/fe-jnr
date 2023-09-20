@@ -18,6 +18,7 @@ const apiLogin = (data) => {
     password: data.password,
   });
 };
+
 const displayUserWithPagination = (page, limit) => {
   return axios.get(
     `http://localhost:8081/api/read-user-page?page=${page}&limit=${limit}`,
@@ -28,4 +29,16 @@ const displayUserWithPagination = (page, limit) => {
   );
 };
 
-export { apiRegister, apiLogin, displayUserWithPagination };
+const createNewUser = (data) => {
+  return axios.post("http://localhost:8081/api/create-user", {
+    email: data.email,
+    password: data.password,
+    rePassword: data.rePassword,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    gender: data.gender,
+    address: data.address,
+    phoneNumber: data.phoneNumber,
+  });
+};
+export { apiRegister, apiLogin, displayUserWithPagination, createNewUser };
