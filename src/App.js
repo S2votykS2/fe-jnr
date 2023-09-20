@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+
 import AppRoute from "./routes/appRoute";
 
 function App() {
@@ -15,7 +14,7 @@ function App() {
       </div>{" "}
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={2900}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
