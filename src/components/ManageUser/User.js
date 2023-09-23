@@ -26,13 +26,15 @@ const User = (props) => {
     }
     fetchDisplayUsers();
   }, []);
-
+  const [id, setId] = useState();
   const [email, setEmail] = useState();
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [gender, setGender] = useState();
   const [address, setAddress] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
+  const [groupName, setGroupName] = useState();
+  const [groupDescription, setGroupDescription] = useState();
 
   const [totalPage, setTotalPage] = useState(1);
   const [page, setPage] = useState(1);
@@ -40,6 +42,7 @@ const User = (props) => {
   const [users, setUsers] = useState([]);
 
   const [openModalDeleteUser, setOpenModalDeleteUser] = useState(false);
+  const [openModalUpdateUser, setOpenModalUpdateUser] = useState(false);
 
   const fetchDisplayUsers = async () => {
     let data = await displayUserWithPagination(page, limit);
@@ -55,26 +58,28 @@ const User = (props) => {
     }
   };
   const handleDeleteUser = async (item) => {
-    setEmail(item.email);
-    setFirstName(item.firstName);
-    setLastName(item.lastName);
-    setGender(item.gender);
-    setAddress(item.address);
-    setPhoneNumber(item.phoneNumber);
-
     openModalDeleteUserF();
+    setId(item.id);
+    setEmail(item.email);
   };
   const openModalDeleteUserF = (openModalDeleteUser) => {
     setOpenModalDeleteUser(!openModalDeleteUser);
   };
+  const openModalUpdateUserF = (openModalUpdateUser) => {
+    setOpenModalUpdateUser(!openModalUpdateUser);
+  };
 
   const handleUpdateUser = (item) => {
+    setId(item.id);
     setEmail(item.email);
     setFirstName(item.firstName);
     setLastName(item.lastName);
     setGender(item.gender);
     setAddress(item.address);
     setPhoneNumber(item.phoneNumber);
+    setGroupName(item.group.name);
+    setGroupDescription(item.group.description);
+    openModalUpdateUserF();
   };
   return (
     <div className="user-container">
@@ -82,12 +87,25 @@ const User = (props) => {
       <div className="container">
         <ModalCreateUser />{" "}
         <ModalDeleteUser
+          id={id}
           email={email}
           openModalDeleteUser={openModalDeleteUser}
           openModalDeleteUserF={openModalDeleteUserF}
         />{" "}
         <ModalUpdateUser
-          data={{ email, firstName, lastName, gender, address, phoneNumber }}
+          data={{
+            id,
+            email,
+            firstName,
+            lastName,
+            gender,
+            address,
+            phoneNumber,
+            groupName,
+            groupDescription,
+          }}
+          openModalUpdateUser={openModalUpdateUser}
+          openModalUpdateUserF={openModalUpdateUserF}
         />{" "}
         <table class="table table-hover mb-4">
           <thead>
@@ -108,7 +126,8 @@ const User = (props) => {
                     <th scope="row"> {item.id} </th> <td> {item.email} </td>{" "}
                     <td> {item.firstName} </td> <td> {item.lastName} </td>{" "}
                     <td> {item.gender} </td> <td> {item.phoneNumber} </td>{" "}
-                    <td> {item.address} </td> <td> {item.group.name} </td>{" "}
+                    <td> {item.address} </td>{" "}
+                    <td> {item.group.description} </td>{" "}
                     <td>
                       <FontAwesomeIcon
                         icon={faEdit}
