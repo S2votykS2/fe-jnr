@@ -23,6 +23,10 @@ const apiLogin = (data) => {
   );
 };
 
+const apiLogout = (data) => {
+  return axios.post("http://localhost:8081/api/logout");
+};
+
 const displayUserWithPagination = (page, limit) => {
   return axios.get(
     `http://localhost:8081/api/read-user-page?page=${page}&limit=${limit}`,
@@ -31,21 +35,26 @@ const displayUserWithPagination = (page, limit) => {
     {
       page,
       limit,
-    }
+    },
+    { withCredentials: true }
   );
 };
 
 const createNewUser = (data) => {
-  return axios.post("http://localhost:8081/api/create-user", {
-    email: data.email,
-    password: data.password,
-    rePassword: data.rePassword,
-    firstName: data.firstName,
-    lastName: data.lastName,
-    gender: data.gender,
-    address: data.address,
-    phoneNumber: data.phoneNumber,
-  });
+  return axios.post(
+    "http://localhost:8081/api/create-user",
+    {
+      email: data.email,
+      password: data.password,
+      rePassword: data.rePassword,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      gender: data.gender,
+      address: data.address,
+      phoneNumber: data.phoneNumber,
+    },
+    { withCredentials: true }
+  );
 };
 
 const updateUser = (data) => {
@@ -59,16 +68,19 @@ const updateUser = (data) => {
       phoneNumber: data.phoneNumber,
       gender: data.gender,
       address: data.address,
-      groupName: data.groupName,
-      groupDescription: data.groupDescription,
+      groupId: data.groupId,
     },
     { withCredentials: true }
   );
 };
 const deleteUser = (id) => {
-  return axios.delete(`http://localhost:8081/api/delete-user?id=${id}`, {
-    id,
-  });
+  return axios.delete(
+    `http://localhost:8081/api/delete-user?id=${id}`,
+    {
+      id,
+    },
+    { withCredentials: true }
+  );
 };
 
 const getAllGroup = () => {
@@ -77,6 +89,7 @@ const getAllGroup = () => {
 export {
   apiRegister,
   apiLogin,
+  apiLogout,
   displayUserWithPagination,
   createNewUser,
   deleteUser,

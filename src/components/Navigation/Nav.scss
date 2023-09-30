@@ -1,7 +1,7 @@
     /* Add a black background color to the top navigation */
     
     .topnav {
-        background-color: #333;
+        background-color: #65b0c1;
         overflow: hidden;
         a {
             float: left;
@@ -18,5 +18,16 @@
         a:hover {
             background-color: #ddd;
             color: black;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .left-header {
+                display: flex;
+            }
+            .right-header {
+                display: flex;
+            }
         }
     }

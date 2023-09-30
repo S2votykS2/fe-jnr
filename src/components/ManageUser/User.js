@@ -1,11 +1,12 @@
-import Nav from "../../components/Navigation/Nav";
+import Navigation from "../Navigation/Nav";
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { displayUserWithPagination } from "../../services/apiService";
 import ModalCreateUser from "./Modal/ModalCreateUser";
 import ModalDeleteUser from "./Modal/ModalDeleteUser";
 import ModalUpdateUser from "./Modal/ModalUpdateUser";
+import { UserContext } from "../../UserContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,7 +17,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./User.scss";
-import { add } from "lodash";
 const User = (props) => {
   const history = useHistory();
   let isLogin = sessionStorage.getItem("account");
@@ -33,8 +33,7 @@ const User = (props) => {
   const [gender, setGender] = useState();
   const [address, setAddress] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
-  const [groupName, setGroupName] = useState();
-  const [groupDescription, setGroupDescription] = useState();
+  const [groupId, setGroupId] = useState();
 
   const [totalPage, setTotalPage] = useState(1);
   const [page, setPage] = useState(1);
@@ -43,6 +42,8 @@ const User = (props) => {
 
   const [openModalDeleteUser, setOpenModalDeleteUser] = useState(false);
   const [openModalUpdateUser, setOpenModalUpdateUser] = useState(false);
+
+  const user = useContext(UserContext);
 
   const fetchDisplayUsers = async () => {
     let data = await displayUserWithPagination(page, limit);
@@ -77,13 +78,12 @@ const User = (props) => {
     setGender(item.gender);
     setAddress(item.address);
     setPhoneNumber(item.phoneNumber);
-    setGroupName(item.group.name);
-    setGroupDescription(item.group.description);
+    setGroupId(item.group.id);
     openModalUpdateUserF();
   };
   return (
     <div className="user-container">
-      <Nav />
+      <Navigation />
       <div className="container">
         <ModalCreateUser />{" "}
         <ModalDeleteUser
@@ -101,8 +101,7 @@ const User = (props) => {
             gender,
             address,
             phoneNumber,
-            groupName,
-            groupDescription,
+            groupId,
           }}
           openModalUpdateUser={openModalUpdateUser}
           openModalUpdateUserF={openModalUpdateUserF}

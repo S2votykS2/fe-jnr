@@ -11,8 +11,7 @@ function ModalUpdateUser(props) {
   const [gender, setGender] = useState();
   const [address, setAddress] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
-  // const [groupName, setGroupName] = useState();
-  // const [groupDescription, setGroupDescription] = useState();
+  const [groupId, setGroupId] = useState();
 
   const [groups, setGroups] = useState();
 
@@ -28,8 +27,7 @@ function ModalUpdateUser(props) {
     setGender(props.data.gender);
     setAddress(props.data.address);
     setPhoneNumber(props.data.phoneNumber);
-    // setGroupName(props.data.group);
-    // setGroupDescription(props.data.group);
+    setGroupId(props.data.groupId);
     fetchGetAllGroup();
   }, [props]);
 
@@ -48,8 +46,7 @@ function ModalUpdateUser(props) {
       gender,
       address,
       phoneNumber,
-      groupName: "hardcode",
-      groupDescription: "hardcode",
+      groupId,
     };
     let response = await updateUser(data);
     if (response.data && response.data.code === 0) {
@@ -77,7 +74,6 @@ function ModalUpdateUser(props) {
                 id="exampleFormControlInput1"
                 disabled
                 value={email}
-                // onChange={(event) => setAddress(event.target.value)}
               />{" "}
             </div>{" "}
             <div className="col-6">
@@ -114,7 +110,10 @@ function ModalUpdateUser(props) {
                 value={gender}
                 onChange={(event) => setGender(event.target.value)}
               >
-                <option selected> Select gender </option>{" "}
+                <option selected value="">
+                  {" "}
+                  Select gender{" "}
+                </option>{" "}
                 <option value="M"> Male </option>{" "}
                 <option value="F"> Famale </option>{" "}
                 <option value="O"> Other </option>{" "}
@@ -132,25 +131,37 @@ function ModalUpdateUser(props) {
                 onChange={(event) => setPhoneNumber(event.target.value)}
               />{" "}
             </div>{" "}
-            {/* <div className="col-12">
-                                                                                                              <label for="exampleFormControlTextarea1" className="form-label">
-                                                                                                                Group{" "}
-                                                                                                              </label>{" "}
-                                                                                                              <select
-                                                                                                                className="form-select"
-                                                                                                                value={groupName}
-                                                                                                                onChange={() => setGroupName(groupName)}
-                                                                                                              >
-                                                                                                                <option> Select group </option>{" "}
-                                                                                                                {groups &&
-                                                                                                                  groups.length > 0 &&
-                                                                                                                  groups.map((item, index) => {
-                                                                                                                    return (
-                                                                                                                      <option value={item.name}> {item.description} </option>
-                                                                                                                    );
-                                                                                                                  })}{" "}
-                                                                                                              </select>{" "}
-                                                                                                            </div>{" "} */}{" "}
+            <div className="col-12">
+              <label for="exampleFormControlTextarea1" className="form-label">
+                Address{" "}
+              </label>{" "}
+              <input
+                type="text"
+                className="form-control"
+                id="exampleFormControlInput1"
+                value={address}
+                onChange={(event) => setAddress(event.target.value)}
+              />{" "}
+            </div>{" "}
+            <div className="col-12">
+              <label for="exampleFormControlTextarea1" className="form-label">
+                Group{" "}
+              </label>{" "}
+              <select
+                className="form-select"
+                value={groupId}
+                onChange={(e) => setGroupId(e.target.value)}
+              >
+                <option> Select group </option>{" "}
+                {groups &&
+                  groups.length > 0 &&
+                  groups.map((item, index) => {
+                    return (
+                      <option value={item.id}> {item.description} </option>
+                    );
+                  })}{" "}
+              </select>{" "}
+            </div>{" "}
           </div>{" "}
         </ModalBody>{" "}
         <ModalFooter>

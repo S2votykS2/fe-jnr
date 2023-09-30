@@ -1,8 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { apiLogin } from "../../services/apiService";
+import { UserContext } from "../../UserContext";
 
 function Login() {
   const history = useHistory();
@@ -14,6 +15,8 @@ function Login() {
   }, []);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
+  const { loginContext, user } = useContext(UserContext);
 
   const handleRegister = () => {
     history.push("/register");
@@ -39,12 +42,15 @@ function Login() {
         password,
       };
       let response = await apiLogin(data);
+
       if (response.data && response.data.code === 0) {
-        let data = {
-          isLogin: "true",
-          token: "fake token",
+        let userContext = {
+          isLogin: true,
+          token: response.data.token,
+          email: response.data.user.user.email,
         };
-        sessionStorage.setItem("account", JSON.stringify(data));
+        await loginContext(userContext);
+        sessionStorage.setItem("account", JSON.stringify(response.data.token));
         history.push("/user");
       }
       if (response.data && response.data.code !== 0) {

@@ -49,6 +49,9 @@ function ModalCreateUser(props) {
     if (response.data && response.data.code !== 0) {
       toast.error(response.data.message);
     }
+    // if (response && response.code !== 0) {
+    //   toast.error(response.message);
+    // }
   };
   return (
     <div>
